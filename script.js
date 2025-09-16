@@ -8,40 +8,33 @@ function saveTransactions ()  {
 localStorage.setItem("transactions", JSON.stringify(Transactions));
 }
 
-function renderTransactions () {
+function renderTransactions() {
     const list = document.getElementById("transactions");
     list.innerHTML = "";
 
-    const sorted = [...Transactions].sort( (i, e) => {
-        if (i.type === "expense" && e.type === "income") return -1;
-        if (i.type === "income" && e.type === "expense") return 1;
-        return e.id - i.id;
-    })
-
-    sorted.forEach (t => {
+    const reversed = [...Transactions].reverse();
+    
+    reversed.forEach(t => {
         const li = document.createElement("li");
-        li.classList.add("transaction", t.type);
-        const icon = t.type === "income" ? "💵" : "💸";
-        li.style.color = t.type === "income" ? "green" : "red";
+        li.classList.add("transaction");
 
-        const textDiv = document.createElement("div");
-        textDiv.classList.add("text")
-        textDiv.innerHTML = `
-        <div class="dics">${t.dics} - $${t.amount}</div>
-        <div class="date">${t.date}</div>
+        li.innerHTML = `
+            <div class="details">
+                <span class="desc">${t.dics}</span>
+                <span class="date">${t.date}</span>
+            </div>
+            <div class="amount ${t.type}">
+                ${t.type === "income" ? "+" : "-"}$${t.amount}
+            </div>
+            <button class="delete">❌</button>
         `;
-        
-        const btn = document.createElement("button");
-    btn.textContent = "❌";
-    btn.onclick = () => deleteTransaction(t.id);
 
-
-    li.appendChild(textDiv);
-    li.appendChild(btn);
-    list.appendChild(li);
+        li.querySelector(".delete").onclick = () => deleteTransaction(t.id);
+        list.appendChild(li);
     });
-
 }
+
+
 
 function updateSummary () {
     let income = 0, expense = 0;
@@ -70,12 +63,20 @@ function addTransactions (type) {
     }
 
     const transaction = {
-        id: Date.now(),
-        dics,
-        amount,
-        type,
-        date: new Date().toLocaleString()
-    }
+     id: Date.now(),
+     dics,
+     amount,
+     type,
+     date: new Date().toLocaleString('en-US', {
+        month: 'short',     // Sep
+        day: 'numeric',     // 15
+        year: 'numeric',    // 2025
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+       })
+   };
+
     Transactions.push(transaction);
     saveTransactions();
     renderTransactions();
