@@ -43,7 +43,7 @@ h1 {
 
 #balance {
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 
 /* Input section */
@@ -68,9 +68,6 @@ button {
     transition: background 0.3s;
 }
 
-button:hover {
-    background-color: #2980b9;
-}
 
 /* Transactions list */
 ul#transactions {
@@ -92,7 +89,7 @@ ul#transactions li {
 }
 
 ul#transactions li button {
-    background-color: #e74c3c;
+    background-color: white;
     padding: 5px 8px;
     font-size: 0.9em;
     border-radius: 5px;
@@ -100,4 +97,55 @@ ul#transactions li button {
 
 ul#transactions li button:hover {
     background-color: #c0392b;
+}
+ /* Each transaction row */
+.transaction {
+  display: flex;
+  justify-content: space-between; /* pushes button to far right */
+  align-items: flex-start;        /* align top */
+  margin: 10px 0;
+  padding: 12px;
+  border-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+/* text block (desc + date) */
+.transaction .text {
+  display: flex;
+  font-size: 20px;
+  flex-direction: column; /* stack desc above date */
+}
+
+/* description styling */
+.transaction .dics {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+/* date styling */
+.transaction .date {
+  font-size: 0.6em;
+  color: gray;
+  margin-top: 1.5px;
+  margin-left: 1em;
+}
+
+/* delete button */
+.transaction button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.1em;
+}
+
+
+/* Income card (green border) */
+.transaction.income {
+  border-left: 6px solid #4caf50;
+}
+
+/* Expense card (red border) */
+.transaction.expense {
+  border-left: 6px solid #f44336;
 }

@@ -12,18 +12,31 @@ function renderTransactions () {
     const list = document.getElementById("transactions");
     list.innerHTML = "";
 
-    Transactions.forEach (t => {
+    const sorted = [...Transactions].sort( (i, e) => {
+        if (i.type === "expense" && e.type === "income") return -1;
+        if (i.type === "income" && e.type === "expense") return 1;
+        return e.id - i.id;
+    })
+
+    sorted.forEach (t => {
         const li = document.createElement("li");
-        li.innerHTML = `
-        <span>${t.dics} - $${t.amount}</span>
-        <span style="font-size:0.8em; color:gray;">${t.date}</span>
-        `;
+        li.classList.add("transaction", t.type);
+        const icon = t.type === "income" ? "💵" : "💸";
         li.style.color = t.type === "income" ? "green" : "red";
 
+        const textDiv = document.createElement("div");
+        textDiv.classList.add("text")
+        textDiv.innerHTML = `
+        <div class="dics">${t.dics} - $${t.amount}</div>
+        <div class="date">${t.date}</div>
+        `;
+        
         const btn = document.createElement("button");
     btn.textContent = "❌";
     btn.onclick = () => deleteTransaction(t.id);
 
+
+    li.appendChild(textDiv);
     li.appendChild(btn);
     list.appendChild(li);
     });
