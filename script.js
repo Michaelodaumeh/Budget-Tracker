@@ -13,7 +13,7 @@ function renderTransactions() {
     list.innerHTML = "";
 
     const reversed = [...Transactions].reverse();
-    
+
     reversed.forEach(t => {
         const li = document.createElement("li");
         li.classList.add("transaction");
@@ -54,11 +54,13 @@ function updateSummary () {
 
 function addTransactions (type) {
 
+    const messageDiv = document.getElementById("message")
     const dics = document.getElementById("disc").value.trim();
     const amount = parseFloat(document.getElementById("amount").value);
 
     if (disc === "" || isNaN(amount) || amount <= 0){
-        alert("Please enter a valid Description and Amount.");
+        messageDiv.textContent = "Please enter a valid Description and Amount";
+        setTimeout( () => {messageDiv.textContent = "";}, 3000);
         return;
     }
 

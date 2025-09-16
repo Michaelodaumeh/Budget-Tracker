@@ -17,6 +17,7 @@ h1 {
 h2 {
   display: flex;
   justify-self: start;
+  margin-bottom: 10px;
 }
 
 /* Summary section */
@@ -191,5 +192,11 @@ ul#transactions li button:hover {
 
 .transaction:hover button.delete {
   opacity: 1;             /* show on hover */
+}
+
+#message {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9em;
 }
 
